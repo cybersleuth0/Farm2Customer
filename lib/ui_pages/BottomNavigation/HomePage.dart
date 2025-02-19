@@ -2,6 +2,8 @@ import 'package:farm2customer/domain/app_db.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'cart_provider.dart';
+
 class HomePageNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -185,7 +187,21 @@ class HomePageNavigation extends StatelessWidget {
                                                   BorderRadius.circular(15),
                                             ),
                                           ),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            // Add the product to the cart
+                                            CartProvider.addToCart(
+                                              HomeScreen.itemcategories[
+                                                      categoryindex]["products"]
+                                                  [index],
+                                            );
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                    "${HomeScreen.itemcategories[categoryindex]["products"][index]["name"]} added to cart!"),
+                                              ),
+                                            );
+                                          },
                                           child: Icon(Icons.add,
                                               color: Colors.white, size: 30),
                                         ),

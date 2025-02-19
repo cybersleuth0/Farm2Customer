@@ -1,6 +1,6 @@
 import 'package:farm2customer/ui_pages/BottomNavigation/Explore.dart';
 import 'package:farm2customer/ui_pages/BottomNavigation/HomePage.dart';
-import 'package:farm2customer/ui_pages/BottomNavigation/allitems.dart';
+import 'package:farm2customer/ui_pages/BottomNavigation/cart_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +14,7 @@ class _BasehomepageState extends State<Basehomepage> {
   List<Widget> _pages = [
     HomePageNavigation(),
     ExplorePageNavigation(),
-    AllItems()
+    CartScreen()
   ];
 
   @override

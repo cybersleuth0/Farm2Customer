@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:farm2customer/domain/app_db.dart';
-import 'package:farm2customer/ui_pages/BottomNavigation/allitems.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -36,6 +35,14 @@ class ExplorePageNavigation extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
+            SizedBox(height: 20),
+            Text(
+              "Find Products",
+              style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: "Gilory_SemiBold",
+                  fontWeight: FontWeight.bold),
+            ),
             SizedBox(height: 20),
             //Search Box
             Container(
@@ -91,9 +98,8 @@ class ExplorePageNavigation extends StatelessWidget {
                       Random().nextInt(_colorsAndbordercolor.length);
                   return GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, "/allItems",arguments: {
-                        "selectedIndex":index
-                      });
+                      Navigator.pushNamed(context, "/allItems",
+                          arguments: {"selectedIndex": index});
                     },
                     child: Container(
                       decoration: BoxDecoration(

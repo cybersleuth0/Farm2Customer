@@ -2,11 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:farm2customer/domain/app_db.dart';
 
+import 'cart_provider.dart';
+
 class AllItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
     final int selectedIndex = args["selectedIndex"];
     return Scaffold(
       body: SingleChildScrollView(
@@ -105,7 +108,19 @@ class AllItems extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(15),
                                     ),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    // Add the product to the cart
+                                    CartProvider.addToCart(
+                                      HomeScreen.itemcategories[selectedIndex]
+                                          ["products"][index],
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                            "${HomeScreen.itemcategories[selectedIndex]["products"][index]["name"]} added to cart!"),
+                                      ),
+                                    );
+                                  },
                                   child: Icon(Icons.add,
                                       color: Colors.white, size: 30),
                                 ),
