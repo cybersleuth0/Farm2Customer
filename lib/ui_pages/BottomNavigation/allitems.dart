@@ -12,6 +12,7 @@ class AllItems extends StatelessWidget {
 
     final int selectedIndex = args["selectedIndex"];
     return Scaffold(
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),
