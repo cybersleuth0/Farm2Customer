@@ -12,21 +12,32 @@ class AllItems extends StatelessWidget {
 
     final int selectedIndex = args["selectedIndex"];
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.amber,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(
+                context); // This will navigate back to the previous screen
+          },
+        ),
+        title: Text(
+          "${HomeScreen.itemcategories[selectedIndex]["category"]}",
+          style: TextStyle(
+            fontFamily: "Gilory_SemiBold",
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              SizedBox(height: 60),
-              Text(
-                "${HomeScreen.itemcategories[selectedIndex]["category"]}",
-                style: TextStyle(
-                    fontFamily: "Gilory_SemiBold",
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
+              SizedBox(height: 20),
               SizedBox(
                 height: 1300, // Set fixed height for the product list
                 child: GridView.builder(
@@ -38,7 +49,8 @@ class AllItems extends StatelessWidget {
                     mainAxisSpacing: 10,
                   ),
                   shrinkWrap: true,
-                  itemCount: HomeScreen.itemcategories[1]["products"].length,
+                  itemCount: HomeScreen
+                      .itemcategories[selectedIndex]["products"].length,
                   itemBuilder: (context, index) {
                     return Container(
                       padding: EdgeInsets.symmetric(horizontal: 10),
@@ -60,8 +72,8 @@ class AllItems extends StatelessWidget {
                                 image: DecorationImage(
                                   fit: BoxFit.contain,
                                   image: AssetImage(
-                                    HomeScreen.itemcategories[1]["products"]
-                                        [index]["imgpath"],
+                                    HomeScreen.itemcategories[selectedIndex]
+                                        ["products"][index]["imgpath"],
                                   ),
                                 ),
                               ),
@@ -70,16 +82,16 @@ class AllItems extends StatelessWidget {
                           SizedBox(height: 10),
                           // Product Name
                           Text(
-                            HomeScreen.itemcategories[1]["products"][index]
-                                ["name"],
+                            HomeScreen.itemcategories[selectedIndex]["products"]
+                                [index]["name"],
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           SizedBox(height: 5),
                           // Quantity
                           Text(
-                            HomeScreen.itemcategories[1]["products"][index]
-                                ["quantity"],
+                            HomeScreen.itemcategories[selectedIndex]["products"]
+                                [index]["quantity"],
                             style: TextStyle(fontSize: 14, color: Colors.grey),
                           ),
                           SizedBox(height: 10),
@@ -89,8 +101,8 @@ class AllItems extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: Text(
-                                  HomeScreen.itemcategories[1]["products"]
-                                      [index]["price"],
+                                  HomeScreen.itemcategories[selectedIndex]
+                                      ["products"][index]["price"],
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
