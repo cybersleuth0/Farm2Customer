@@ -5,6 +5,8 @@ import 'package:farm2customer/domain/app_db.dart';
 import 'cart_provider.dart';
 
 class AllItems extends StatelessWidget {
+  const AllItems({super.key});
+
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> args =

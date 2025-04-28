@@ -5,13 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Basehomepage extends StatefulWidget {
+  const Basehomepage({super.key});
+
   @override
   State<Basehomepage> createState() => _BasehomepageState();
 }
 
 class _BasehomepageState extends State<Basehomepage> {
   int _selectedIndex = 0;
-  List<Widget> _pages = [
+  final List<Widget> _pages = [
     HomePageNavigation(),
     ExplorePageNavigation(),
     CartScreen()

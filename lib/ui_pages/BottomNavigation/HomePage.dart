@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'cart_provider.dart';
 
 class HomePageNavigation extends StatelessWidget {
+  const HomePageNavigation({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

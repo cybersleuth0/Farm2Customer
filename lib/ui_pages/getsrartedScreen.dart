@@ -1,7 +1,10 @@
+import 'package:farm2customer/App_Constant/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class GetstartedScreen extends StatefulWidget {
+  const GetstartedScreen({super.key});
+
   @override
   State<GetstartedScreen> createState() => GetstartedScreenState();
 }
@@ -65,7 +68,7 @@ class GetstartedScreenState extends State<GetstartedScreen> {
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context, "/signup");
+                            Navigator.pushNamed(context, AppRoutes.ROUTE_SIGNUP);
                           },
                           child: Text("Get Started"),
                         ),

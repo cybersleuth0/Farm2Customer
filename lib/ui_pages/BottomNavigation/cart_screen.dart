@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'cart_provider.dart';
 
 class CartScreen extends StatefulWidget {
+  const CartScreen({super.key});
+
   @override
   _CartScreenState createState() => _CartScreenState();
 }

@@ -28,6 +28,8 @@ class ExplorePageNavigation extends StatelessWidget {
     },
   ];
 
+  ExplorePageNavigation({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
