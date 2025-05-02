@@ -1,7 +1,6 @@
 import 'package:farm2customer/ui_pages/BottomNavigation/Explore.dart';
 import 'package:farm2customer/ui_pages/BottomNavigation/HomePage.dart';
 import 'package:farm2customer/ui_pages/BottomNavigation/cart_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Basehomepage extends StatefulWidget {

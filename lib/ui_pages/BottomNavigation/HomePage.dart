@@ -1,5 +1,4 @@
 import 'package:farm2customer/domain/app_db.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'cart_provider.dart';

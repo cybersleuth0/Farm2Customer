@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:farm2customer/domain/app_db.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ExplorePageNavigation extends StatelessWidget {
