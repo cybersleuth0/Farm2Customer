@@ -116,7 +116,7 @@ class DBHelper {
   ///
   /// Parameters:
   ///   - [mail]: The email address to check for existence.
-  isUserAlreadyExist({required String mail}) async {
+  Future<bool> isUserAlreadyExist({required String mail}) async {
     // Get the database instance.
     var db = await getDB();
     // Query the 'user' table where the email matches the provided 'mail'.
@@ -140,9 +140,10 @@ class DBHelper {
   ///   - A [Future<bool>] that resolves to true if a matching user is found (successful login), false otherwise.
   Future<bool> loginUser(
       {required String mail, required String password}) async {
-    var db = await getDB();//get database instance.
+    var db = await getDB(); //get database instance.
     List<Map<String, dynamic>> ans = await db.query(userTableName,
-        where: "$userEmailColumn=? AND $userPasswordColumn=?", //Query the 'user' table where the email and password match the provided credentials.
+        where:
+            "$userEmailColumn=? AND $userPasswordColumn=?", //Query the 'user' table where the email and password match the provided credentials.
         whereArgs: [mail, password]);
 
     return ans.isNotEmpty;
