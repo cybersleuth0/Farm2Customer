@@ -8,13 +8,6 @@ import 'package:farm2customer/ui_pages/signUpScreen.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {
-  // "/getstarted": (context) => GetstartedScreen(),
-  // "/login": (context) => LoginScreen(),
-  // "/signup": (context) => SignupScreen(),
-  // "/basehomepage": (context) => Basehomepage(),
-  // "/homepageNavigation": (context) => HomePageNavigation(),
-  // "/explorePageNavigation": (context) => ExplorePageNavigation(),
-  // "/allItems": (context) => AllItems(),
 
   static const String ROUTE_GETSTARTED = "/getstarted";
   static const String ROUTE_LOGIN = "/login";
@@ -34,4 +27,8 @@ class AppRoutes {
         ROUTE_EXPLORE: (context) => ExplorePageNavigation(),
         ROUTE_ALLITEMS: (context) => AllItems(),
       };
+}
+
+class AppConstant {
+  static const String isLogedIN = "is_login";
 }

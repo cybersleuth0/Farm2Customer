@@ -23,7 +23,19 @@ class SignupScreenState extends State<SignupScreen> {
   // Key for the form to validate it
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  // Flag to indicate if the signup process is currently loading
   bool isLoading = false;
+
+  @override
+  // Clear the text field controllers when the widget is initialized
+  void initState() {
+    super.initState();
+    nameControler.clear();
+    phoneControler.clear();
+    mailControler.clear();
+    passwdControler.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -282,6 +294,7 @@ class SignupScreenState extends State<SignupScreen> {
                                   )),
                               SizedBox(height: 20),
                               //Sign Up button
+                              // Listen to the state changes of the RegisterBloc
                               BlocListener<RegisterBloc, RegisterState>(
                                 listener: (context, state) {
                                   if (state is RegisterLoadingState) {
@@ -294,15 +307,31 @@ class SignupScreenState extends State<SignupScreen> {
                                     });
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
-                                            content: Text(state.errorMSG)));
+                                        backgroundColor: Colors.red,
+                                        content: Text(
+                                          state.errorMSG,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        duration: Duration(seconds: 3),
+                                      ),
+                                    );
                                   } else if (state is RegisterSuccessState) {
                                     setState(() {
                                       isLoading = false;
                                     });
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
+                                            backgroundColor: Colors.green,
                                             content: Text(
-                                                "Registered Successfully!!")));
+                                              "Registered Successfully!!",
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                            duration: Duration(
+                                                seconds:
+                                                    3))); // Adjusted duration
+                                    // Optionally navigate to another screen on success
+                                    Navigator.pushNamed(context, "/login");
                                   }
                                 },
                                 child: Align(
@@ -314,10 +343,13 @@ class SignupScreenState extends State<SignupScreen> {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 100, vertical: 10)),
                                     onPressed: () {
+                                      // Validate the form before submitting
                                       if (formKey.currentState!.validate()) {
+                                        // Trigger the RegisterNewUserBTN_Event with user data
                                         context.read<RegisterBloc>().add(
                                             RegisterNewUserBTN_Event(
                                                 newuser:
+                                                    // Create a UserModel from the text field controllers
                                                     UserModel(
                                                         user_name: nameControler
                                                             .text
@@ -332,13 +364,12 @@ class SignupScreenState extends State<SignupScreen> {
                                                             phoneControler.text
                                                                 .trim())));
                                       }
-                                      print(isLoading);
                                     },
                                     child: isLoading
                                         ? Row(children: [
                                             CircularProgressIndicator(),
                                             SizedBox(width: 10),
-                                            Text("Loading..."),
+                                            Text("Registering..."),
                                           ])
                                         : const Text("Sign Up"),
                                   ),

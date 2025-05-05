@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:farm2customer/App_Constant/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GetstartedScreen extends StatefulWidget {
   const GetstartedScreen({super.key});
@@ -9,6 +12,19 @@ class GetstartedScreen extends StatefulWidget {
 }
 
 class GetstartedScreenState extends State<GetstartedScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 3), () async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      if (prefs.getInt(AppConstant.isLogedIN) != null) {
+        Navigator.pushReplacementNamed(context, AppRoutes.ROUTE_BASEHOMEPAGE);
+      } else {
+        Navigator.pushReplacementNamed(context, AppRoutes.ROUTE_LOGIN);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -49,28 +65,11 @@ class GetstartedScreenState extends State<GetstartedScreen> {
                           style: TextStyle(
                             fontFamily: "Offside",
                             fontSize: 17,
-                            color: Colors.white.withOpacity(0.8),
+                            color: Colors.white,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                         SizedBox(height: 20),
-                        //get Started button
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            elevation: 2,
-                            //backgroundColor: Colors.orange.shade500,
-                            backgroundColor: Color(0xff53b175),
-                            foregroundColor: Colors.white,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 10),
-                            textStyle: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          onPressed: () {
-                            Navigator.pushNamed(context, AppRoutes.ROUTE_SIGNUP);
-                          },
-                          child: Text("Get Started"),
-                        ),
                       ],
                     ),
                   ),

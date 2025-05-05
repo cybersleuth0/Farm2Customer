@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:farm2customer/App_Constant/constant.dart';
 import 'package:farm2customer/data/model/usermodel.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
 /// [DBHelper] class for managing the local SQLite database.
@@ -145,7 +147,11 @@ class DBHelper {
         where:
             "$userEmailColumn=? AND $userPasswordColumn=?", //Query the 'user' table where the email and password match the provided credentials.
         whereArgs: [mail, password]);
-
+    if (ans.isNotEmpty) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setInt(
+          AppConstant.isLogedIN, UserModel.fromMap(ans[0]).user_id ?? 0);
+    }
     return ans.isNotEmpty;
   }
 }
