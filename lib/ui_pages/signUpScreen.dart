@@ -1,4 +1,9 @@
+import 'package:farm2customer/Bloc/Signup/signup_bloc.dart';
+import 'package:farm2customer/Bloc/Signup/signup_event.dart';
+import 'package:farm2customer/Bloc/Signup/signup_state.dart';
+import 'package:farm2customer/data/model/usermodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -13,12 +18,12 @@ class SignupScreenState extends State<SignupScreen> {
   TextEditingController phoneControler = TextEditingController();
 
   // Flag to toggle password visibility
-  bool isPasswordVisible = false;
+  bool isPasswordVisible = true;
 
   // Key for the form to validate it
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  GlobalKey formKey = GlobalKey<FormState>();
-
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -56,8 +61,8 @@ class SignupScreenState extends State<SignupScreen> {
                                     fontSize: 26, fontFamily: "Gilory_Medium"),
                               ),
                               SizedBox(height: 10),
+                              //Enter Your credentials to continue text
                               Text(
-                                //Enter Your credentials to continue text
                                 "Enter Your credentials to continue",
                                 style: TextStyle(
                                     fontSize: 16,
@@ -100,7 +105,7 @@ class SignupScreenState extends State<SignupScreen> {
                                 },
                               ),
                               SizedBox(height: 20),
-                              // Mobile Number text field
+                              // Mobile Number text
                               Text(
                                 "Mobile Number",
                                 style: TextStyle(
@@ -113,8 +118,9 @@ class SignupScreenState extends State<SignupScreen> {
                               TextFormField(
                                 controller: phoneControler,
                                 keyboardType: TextInputType.phone,
+                                maxLength: 10,
                                 decoration: InputDecoration(
-                                  hintText: "Enter Number",
+                                  hintText: "Enter Phone Number",
                                   border: OutlineInputBorder(),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -129,13 +135,14 @@ class SignupScreenState extends State<SignupScreen> {
                                 ),
                                 validator: (inputValue) {
                                   if (inputValue!.isEmpty) {
-                                    return "Name Filed can not be empty !!";
-                                  } else {
-                                    return null;
+                                    return "Phone Number can not be empty !!";
                                   }
+                                  if (inputValue.length != 10) {
+                                    return "Please enter a valid number";
+                                  }
+                                  return null;
                                 },
                               ),
-                              SizedBox(height: 20),
                               //email text
                               Text(
                                 "Email",
@@ -146,7 +153,7 @@ class SignupScreenState extends State<SignupScreen> {
                               ),
                               SizedBox(height: 10),
                               // email text field
-                              TextField(
+                              TextFormField(
                                 keyboardType: TextInputType.emailAddress,
                                   controller: mailControler,
                                   decoration: InputDecoration(
@@ -163,7 +170,17 @@ class SignupScreenState extends State<SignupScreen> {
                                       fontSize: 16,
                                       color: Color(0xff7C7C7C),
                                     ),
-                                  )),
+                                ),
+                                validator: (inputValue) {
+                                  var exp = RegExp(
+                                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                                  if (!exp.hasMatch(inputValue!)) {
+                                    return "Invalid Email";
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                              ),
                               SizedBox(height: 20),
                               // Password text
                               Text(
@@ -175,7 +192,7 @@ class SignupScreenState extends State<SignupScreen> {
                               ),
                               SizedBox(height: 10),
                               // password text field
-                              TextField(
+                              TextFormField(
                                   controller: passwdControler,
                                   obscureText: !isPasswordVisible,
                                   decoration: InputDecoration(
@@ -201,7 +218,22 @@ class SignupScreenState extends State<SignupScreen> {
                                         child: isPasswordVisible
                                             ? Icon(Icons.visibility)
                                             : Icon(Icons.visibility_off)),
-                                  )),
+                                  ),
+                                  validator: (value) {
+                                    var exp = RegExp(
+                                        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$&*~]).{8,}$');
+                                    if (value!.isEmpty) {
+                                      return "Password field cannot be empty!";
+                                    }
+                                    if (!exp.hasMatch(value)) {
+                                      return """Please include:
+                                        - 1 Upper case
+                                        - 1 lowercase
+                                        - 1 Numeric Number
+                                        - 1 Special Character""";
+                                    }
+                                    return null;
+                                  }),
                               SizedBox(height: 10),
                               // forget password text
                               Align(
@@ -250,20 +282,65 @@ class SignupScreenState extends State<SignupScreen> {
                                   )),
                               SizedBox(height: 20),
                               //Sign Up button
-                              Align(
-                                alignment: Alignment.center,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: Color(0xff53B175),
-                                      foregroundColor: Colors.white,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 100, vertical: 10)),
-                                  onPressed: () {},
-                                  child: Text(
-                                    "Sign Up",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontFamily: "Gilory_SemiBold"),
+                              BlocListener<RegisterBloc, RegisterState>(
+                                listener: (context, state) {
+                                  if (state is RegisterLoadingState) {
+                                    setState(() {
+                                      isLoading = true;
+                                    });
+                                  } else if (state is RegisterFailureState) {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(state.errorMSG)));
+                                  } else if (state is RegisterSuccessState) {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                "Registered Successfully!!")));
+                                  }
+                                },
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Color(0xff53B175),
+                                        foregroundColor: Colors.white,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 100, vertical: 10)),
+                                    onPressed: () {
+                                      if (formKey.currentState!.validate()) {
+                                        context.read<RegisterBloc>().add(
+                                            RegisterNewUserBTN_Event(
+                                                newuser:
+                                                    UserModel(
+                                                        user_name: nameControler
+                                                            .text
+                                                            .trim(),
+                                                        user_email:
+                                                            mailControler.text
+                                                                .trim(),
+                                                        user_password:
+                                                            passwdControler.text
+                                                                .trim(),
+                                                        user_phone:
+                                                            phoneControler.text
+                                                                .trim())));
+                                      }
+                                      print(isLoading);
+                                    },
+                                    child: isLoading
+                                        ? Row(children: [
+                                            CircularProgressIndicator(),
+                                            SizedBox(width: 10),
+                                            Text("Loading..."),
+                                          ])
+                                        : const Text("Sign Up"),
                                   ),
                                 ),
                               ),
@@ -278,7 +355,6 @@ class SignupScreenState extends State<SignupScreen> {
                                     child: Text.rich(
                                       TextSpan(
                                         text: 'Already have an account? ',
-                                        // Normal text
                                         style: TextStyle(
                                             fontFamily: "Gilory_Medium",
                                             fontSize: 16,
