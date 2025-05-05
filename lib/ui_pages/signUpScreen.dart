@@ -294,6 +294,7 @@ class SignupScreenState extends State<SignupScreen> {
                                   )),
                               SizedBox(height: 20),
                               //Sign Up button
+                              // Listen to the state changes of the RegisterBloc to show the state
                               // Listen to the state changes of the RegisterBloc
                               BlocListener<RegisterBloc, RegisterState>(
                                 listener: (context, state) {
@@ -302,6 +303,7 @@ class SignupScreenState extends State<SignupScreen> {
                                       isLoading = true;
                                     });
                                   } else if (state is RegisterFailureState) {
+                                    // show the snackbar when registration is fail
                                     setState(() {
                                       isLoading = false;
                                     });
@@ -316,6 +318,7 @@ class SignupScreenState extends State<SignupScreen> {
                                       ),
                                     );
                                   } else if (state is RegisterSuccessState) {
+                                    // show the snackbar when registration is successfully
                                     setState(() {
                                       isLoading = false;
                                     });
@@ -337,16 +340,20 @@ class SignupScreenState extends State<SignupScreen> {
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: ElevatedButton(
+                                      //Elevated button for sign up
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: Color(0xff53B175),
                                         foregroundColor: Colors.white,
                                         padding: EdgeInsets.symmetric(
+                                            // add padding between button text and border
+
                                             horizontal: 100, vertical: 10)),
                                     onPressed: () {
                                       // Validate the form before submitting
                                       if (formKey.currentState!.validate()) {
                                         // Trigger the RegisterNewUserBTN_Event with user data
                                         context.read<RegisterBloc>().add(
+                                            //event to add new user
                                             RegisterNewUserBTN_Event(
                                                 newuser:
                                                     // Create a UserModel from the text field controllers

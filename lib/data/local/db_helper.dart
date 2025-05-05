@@ -120,6 +120,7 @@ class DBHelper {
   ///   - [mail]: The email address to check for existence.
   Future<bool> isUserAlreadyExist({required String mail}) async {
     // Get the database instance.
+    //get instance of database.
     var db = await getDB();
     // Query the 'user' table where the email matches the provided 'mail'.
     // Returns a List<Map<String,dynamic>>
@@ -141,14 +142,21 @@ class DBHelper {
   /// Returns:
   ///   - A [Future<bool>] that resolves to true if a matching user is found (successful login), false otherwise.
   Future<bool> loginUser(
-      {required String mail, required String password}) async {
-    var db = await getDB(); //get database instance.
+      {required String mail, required String password}) async { 
+    // Get the database instance.
+    var db = await getDB();
+    //Query the 'user' table where the email and password match the provided credentials.
     List<Map<String, dynamic>> ans = await db.query(userTableName,
         where:
-            "$userEmailColumn=? AND $userPasswordColumn=?", //Query the 'user' table where the email and password match the provided credentials.
+            "$userEmailColumn=? AND $userPasswordColumn=?", 
         whereArgs: [mail, password]);
+    //if data is not empty then move in condition
+    //It means user is exist
     if (ans.isNotEmpty) {
+      //get instance of SharedPreferences
       SharedPreferences prefs = await SharedPreferences.getInstance();
+      //set data in sharedpreferences
+      //key is isLogedIN and set userID value
       prefs.setInt(
           AppConstant.isLogedIN, UserModel.fromMap(ans[0]).user_id ?? 0);
     }
