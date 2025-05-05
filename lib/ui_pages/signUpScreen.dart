@@ -203,8 +203,8 @@ class SignupScreenState extends State<SignupScreen> {
                                             : Icon(Icons.visibility_off)),
                                   )),
                               SizedBox(height: 10),
+                              // forget password text
                               Align(
-                                // forget password text
                                 alignment: Alignment.centerRight,
                                 child: Text(
                                   "Forget password",
@@ -217,8 +217,8 @@ class SignupScreenState extends State<SignupScreen> {
                               SizedBox(
                                 height: 10,
                               ),
+                              // Terms and condition text
                               Align(
-                                  // Terms and condition text
                                   alignment: Alignment.center,
                                   child: Text.rich(
                                     TextSpan(
@@ -249,8 +249,8 @@ class SignupScreenState extends State<SignupScreen> {
                                     ),
                                   )),
                               SizedBox(height: 20),
+                              //Sign Up button
                               Align(
-                                //Sign Up button
                                 alignment: Alignment.center,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
