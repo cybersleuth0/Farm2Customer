@@ -163,13 +163,16 @@ class LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                               SizedBox(height: 20),
-                              BlocListener(
+                              BlocListener<LoginBloc, LoginState>(
                                 listener: (context, state) {
                                   if (state is LoginLoading_State) {
                                     setState(() {
                                       isLoading = true;
                                     });
                                   } else if (state is LoginFailure_State) {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(
                                             backgroundColor: Colors.red,
@@ -180,6 +183,9 @@ class LoginScreenState extends State<LoginScreen> {
                                             ),
                                             duration: Duration(seconds: 3)));
                                   } else if (state is LoginSuccess_State) {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(
                                             backgroundColor: Colors.green,

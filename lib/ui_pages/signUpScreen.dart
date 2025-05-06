@@ -346,8 +346,7 @@ class SignupScreenState extends State<SignupScreen> {
                                         foregroundColor: Colors.white,
                                         padding: EdgeInsets.symmetric(
                                             // add padding between button text and border
-
-                                            horizontal: 100, vertical: 10)),
+                                          horizontal: 100, vertical: 10)),
                                     onPressed: () {
                                       // Validate the form before submitting
                                       if (formKey.currentState!.validate()) {
