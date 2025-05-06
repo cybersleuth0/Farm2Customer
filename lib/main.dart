@@ -1,5 +1,6 @@
 // Suggested code may be subject to a license. Learn more: ~LicenseLog:2351871009.
 import 'package:farm2customer/App_Constant/constant.dart';
+import 'package:farm2customer/Bloc/Login/login_bloc.dart';
 import 'package:farm2customer/Bloc/Signup/signup_bloc.dart';
 import 'package:farm2customer/data/local/db_helper.dart';
 import 'package:farm2customer/data/repository/userRepository.dart';
@@ -13,6 +14,9 @@ void main() {
         //initialize the registerbloc provider with user repo and database
         BlocProvider(
             create: (context) => RegisterBloc(
+                userRepo: Userrepository(dbConnector: DBHelper.getInstance()))),
+        BlocProvider(
+            create: (context) => LoginBloc(
                 userRepo: Userrepository(dbConnector: DBHelper.getInstance())))
       ],
       //material app is the main class for flutter application
