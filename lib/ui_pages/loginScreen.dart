@@ -163,6 +163,7 @@ class LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                               SizedBox(height: 20),
+                              // BlocListener to listen for state changes in LoginBloc
                               BlocListener<LoginBloc, LoginState>(
                                 listener: (context, state) {
                                   if (state is LoginLoading_State) {
@@ -200,6 +201,7 @@ class LoginScreenState extends State<LoginScreen> {
                                   }
                                 },
                                 child: Align(
+                                  // ElevatedButton for the login button
                                   alignment: Alignment.center,
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
@@ -230,6 +232,7 @@ class LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                               SizedBox(height: 20),
+                              // InkWell for navigating to the signup screen
                               InkWell(
                                 onTap: () {
                                   Navigator.pushNamed(
