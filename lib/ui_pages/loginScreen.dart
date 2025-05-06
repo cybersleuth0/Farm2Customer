@@ -1,8 +1,12 @@
+import 'package:farm2customer/App_Constant/constant.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  @override
+  State<LoginScreen> createState() => LoginScreenState();
+}
 
+class LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -113,14 +117,7 @@ class LoginScreen extends StatelessWidget {
                                     foregroundColor: Colors.white,
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 100, vertical: 10)),
-                                onPressed: () {
-                                  //use are using pushNamedAndRemoveUntil for on pressing the back we do not want to go on back page we should exit the app
-                                  Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    "/basehomepage",
-                                    (route) => false,
-                                  );
-                                },
+                                onPressed: () {},
                                 child: Text(
                                   "Login",
                                   style: TextStyle(
@@ -132,7 +129,8 @@ class LoginScreen extends StatelessWidget {
                             SizedBox(height: 20),
                             InkWell(
                               onTap: () {
-                                Navigator.pushNamed(context, "/signup");
+                                Navigator.pushNamed(
+                                    context, AppRoutes.ROUTE_SIGNUP);
                               },
                               child: Align(
                                   alignment: Alignment.center,
